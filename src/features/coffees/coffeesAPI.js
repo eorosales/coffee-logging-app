@@ -1,17 +1,70 @@
-import { collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  updateDoc,
+} from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { capitalize } from "../../utils/formatting";
 
-const coffeesRef = collection(db, "coffees");
+const refCoffees = collection(db, "coffees");
 
-export const fetchCoffees = async () => {
-  const data = await getDocs(coffeesRef);
-  const coffees = data.docs.map((doc) => ({
-    ...doc.data(),
-    id: doc.id,
-  }));
-  return { coffees };
+export const getCoffees = async () => {
+  try {
+    const querySnapshot = await getDocs(refCoffees);
+    let coffees = [];
+    querySnapshot?.forEach((doc) => {
+      coffees.push({ id: doc.id, ...doc.data() });
+    });
+    return { coffees };
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
 };
 
-export const fetchCoffee = (id) => {};
+export const addCoffee = async (newCoffeeFormData) => {
+  try {
+    await addDoc(refCoffees, {
+      roaster: capitalize(newCoffeeFormData.roaster),
+      name: capitalize(newCoffeeFormData.name),
+      origin: capitalize(newCoffeeFormData.origin),
+      process: capitalize(newCoffeeFormData.process),
+      flavorNotes: capitalize(newCoffeeFormData.flavorNotes).split(","),
+      favorite: false,
+      createdAt: Date.now(),
+    });
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
 
-export const deleteCoffee = (id) => {};
+export const updateCoffee = async (updateCoffeeInfo) => {
+  try {
+    const response = await updateDoc(doc(db, "coffees", updateCoffeeInfo.id), {
+      roaster: capitalize(updateCoffeeInfo.roaster),
+      name: capitalize(updateCoffeeInfo.name),
+      origin: capitalize(updateCoffeeInfo.origin),
+      process: capitalize(updateCoffeeInfo.process),
+      flavorNotes: capitalize(`${updateCoffeeInfo.flavorNotes}`).split(","),
+      createdAt: Date.now(),
+    });
+    return response;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
+export const deleteCoffee = async (id) => {
+  try {
+    const coffeeToDelete = await deleteDoc(doc(db, "coffees", id));
+    return coffeeToDelete;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
