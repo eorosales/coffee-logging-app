@@ -11,7 +11,9 @@ const initialState = {
   coffeesStatus: "idle",
 };
 
-// API handlers
+// |================|
+// |  API Handlers  |
+// |================|
 
 export const fetchCoffees = createAsyncThunk(
   "coffees/fetchCoffees",
@@ -65,7 +67,9 @@ export const deleteCoffeeById = createAsyncThunk(
   }
 );
 
-// Coffees Slice
+// |=================|
+// |  Coffees Slice  |
+// |=================|
 
 export const coffeesSlice = createSlice({
   name: "Coffees",
@@ -101,10 +105,18 @@ export const coffeesSlice = createSlice({
   },
 });
 
-// Actions
+// |===========|
+// |  Actions  |
+// |===========|
 
-// Selector
+// |============|
+// |  Selector  |
+// |============|
+
 export const coffeesSelector = (state) => state.coffees;
 
-// Export reducer
+// |==================|
+// |  Export Reducer  |
+// |==================|
+
 export default coffeesSlice.reducer;
