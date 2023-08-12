@@ -11,6 +11,7 @@ const NewCoffeeForm = ({ coffee }) => {
     origin: coffee.origin,
     process: coffee.process,
     flavorNotes: coffee.flavorNotes,
+    favorite: coffee.favorite,
   });
 
   const handleChange = (e) => {

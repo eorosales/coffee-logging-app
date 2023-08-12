@@ -4,10 +4,12 @@ import {
   addCoffee,
   deleteCoffee,
   updateCoffee,
+  toggleFavoriteCoffee,
 } from "./coffeesAPI";
 
 const initialState = {
   coffees: [],
+  coffeesFavorites: [],
   coffeesStatus: "idle",
 };
 
@@ -67,6 +69,19 @@ export const deleteCoffeeById = createAsyncThunk(
   }
 );
 
+export const toggleFavorite = createAsyncThunk(
+  "coffees/toggleFavorite",
+  async (toggleFav) => {
+    try {
+      const response = await toggleFavoriteCoffee(toggleFav);
+      return response;
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
+  }
+);
+
 // |=================|
 // |  Coffees Slice  |
 // |=================|
@@ -101,6 +116,12 @@ export const coffeesSlice = createSlice({
       })
       .addCase(updateCoffeeInfo.fulfilled, (state) => {
         state.coffeesStatus = "success";
+      })
+      .addCase(toggleFavorite.pending, (state) => {
+        state.coffeesStatus = "loading";
+      })
+      .addCase(toggleFavorite.fulfilled, (state) => {
+        state.coffeesStatus = "success";
       });
   },
 });
@@ -108,6 +129,8 @@ export const coffeesSlice = createSlice({
 // |===========|
 // |  Actions  |
 // |===========|
+
+// export const { toggleFavorite } = coffeesSlice.actions;
 
 // |============|
 // |  Selector  |

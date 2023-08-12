@@ -50,6 +50,7 @@ export const updateCoffee = async (updateCoffeeInfo) => {
       origin: capitalize(updateCoffeeInfo.origin),
       process: capitalize(updateCoffeeInfo.process),
       flavorNotes: capitalize(`${updateCoffeeInfo.flavorNotes}`).split(","),
+      favorite: updateCoffeeInfo.favorite,
       createdAt: Date.now(),
     });
     return response;
@@ -63,6 +64,19 @@ export const deleteCoffee = async (id) => {
   try {
     const coffeeToDelete = await deleteDoc(doc(db, "coffees", id));
     return coffeeToDelete;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};
+
+export const toggleFavoriteCoffee = async ({ id, fav }) => {
+  const coffeeDocRef = doc(db, "coffees", id);
+  try {
+    const response = await updateDoc(coffeeDocRef, {
+      favorite: !fav,
+    });
+    return response;
   } catch (err) {
     console.log(err);
     throw new Error(err);

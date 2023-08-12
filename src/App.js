@@ -7,7 +7,10 @@ function App() {
   return (
     <div className='App'>
       <Dashboard />
-      <NewCoffeeForm />
+      <div>
+        <h2>Add New Coffee</h2>
+        <NewCoffeeForm />
+      </div>
     </div>
   );
 }
