@@ -11,7 +11,7 @@ import { capitalize } from "../../utils/formatting";
 
 const refCoffees = collection(db, "coffees");
 
-export const getCoffees = async () => {
+export const getCoffeesRequest = async () => {
   try {
     const querySnapshot = await getDocs(refCoffees);
     let coffees = [];
@@ -25,7 +25,7 @@ export const getCoffees = async () => {
   }
 };
 
-export const addCoffee = async (newCoffeeFormData) => {
+export const addCoffeeRequest = async (newCoffeeFormData) => {
   try {
     await addDoc(refCoffees, {
       roaster: capitalize(newCoffeeFormData.roaster),
@@ -42,7 +42,7 @@ export const addCoffee = async (newCoffeeFormData) => {
   }
 };
 
-export const updateCoffee = async (updateCoffeeInfo) => {
+export const updateCoffeeRequest = async (updateCoffeeInfo) => {
   try {
     const response = await updateDoc(doc(db, "coffees", updateCoffeeInfo.id), {
       roaster: capitalize(updateCoffeeInfo.roaster),
@@ -60,7 +60,7 @@ export const updateCoffee = async (updateCoffeeInfo) => {
   }
 };
 
-export const deleteCoffee = async (id) => {
+export const deleteCoffeeById = async (id) => {
   try {
     const coffeeToDelete = await deleteDoc(doc(db, "coffees", id));
     return coffeeToDelete;

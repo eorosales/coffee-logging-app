@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addNewCoffee } from "../../features/coffees/coffeesSlice";
+import { updateCoffee } from "./coffeesSlice";
+import { updateCoffeeRequest } from "./coffeesAPI";
 
-const NewCoffeeForm = () => {
+const UpdateCoffeeForm = ({ coffee }) => {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    roaster: "",
-    name: "",
-    origin: "",
-    process: "",
-    flavorNotes: "",
+  const [updateInfo, setUpdateInfo] = useState({
+    id: coffee.id,
+    roaster: coffee.roaster,
+    name: coffee.name,
+    origin: coffee.origin,
+    process: coffee.process,
+    flavorNotes: coffee.flavorNotes,
+    favorite: coffee.favorite,
   });
 
   const handleChange = (e) => {
     e.preventDefault();
     const value = e.target.value;
     const name = e.target.name;
-    setFormData((prevState) => ({
+    setUpdateInfo((prevState) => ({
       ...prevState,
       [name]: value,
     }));
@@ -24,14 +27,8 @@ const NewCoffeeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addNewCoffee(formData));
-    setFormData({
-      roaster: "",
-      name: "",
-      origin: "",
-      process: "",
-      flavorNotes: "",
-    });
+    dispatch(updateCoffee(updateInfo));
+    updateCoffeeRequest(updateInfo);
   };
 
   return (
@@ -41,7 +38,7 @@ const NewCoffeeForm = () => {
           label='Roaster'
           name='roaster'
           placeholder='Coffee Roaster'
-          value={formData.roaster}
+          value={updateInfo.roaster}
           onChange={(e) => handleChange(e)}
           required
         />
@@ -49,7 +46,7 @@ const NewCoffeeForm = () => {
           label='Name'
           name='name'
           placeholder='Coffee Name'
-          value={formData.name}
+          value={updateInfo.name}
           onChange={(e) => handleChange(e)}
           required
         />
@@ -57,7 +54,7 @@ const NewCoffeeForm = () => {
           label='Origin'
           name='origin'
           placeholder='Coffee Origin'
-          value={formData.origin}
+          value={updateInfo.origin}
           onChange={(e) => handleChange(e)}
           required
         />
@@ -65,7 +62,7 @@ const NewCoffeeForm = () => {
           label='Process'
           name='process'
           placeholder='Coffee Process'
-          value={formData.process}
+          value={updateInfo.process}
           onChange={(e) => handleChange(e)}
           required
         />
@@ -73,7 +70,7 @@ const NewCoffeeForm = () => {
           label='Flavor Notes'
           name='flavorNotes'
           placeholder='Coffee Flavor Notes'
-          value={formData.flavorNotes}
+          value={updateInfo.flavorNotes}
           onChange={(e) => handleChange(e)}
           required
         />
@@ -83,4 +80,4 @@ const NewCoffeeForm = () => {
   );
 };
 
-export default NewCoffeeForm;
+export default UpdateCoffeeForm;

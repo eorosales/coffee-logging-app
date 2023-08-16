@@ -1,16 +1,13 @@
 import React from "react";
 import "./App.css";
-import Dashboard from "./components/Dashboard/Dashboard";
-import NewCoffeeForm from "./components/NewCoffeeForm/NewCoffeeForm";
+import NewCoffeeForm from "./features/coffees/NewCoffeeForm";
+import CoffeesList from "./features/coffees/CoffeesList";
 
 function App() {
   return (
     <div className='App'>
-      <Dashboard />
-      <div>
-        <h2>Add New Coffee</h2>
-        <NewCoffeeForm />
-      </div>
+      <CoffeesList />
+      <NewCoffeeForm />
     </div>
   );
 }

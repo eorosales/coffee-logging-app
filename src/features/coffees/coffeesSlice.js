@@ -1,10 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  getCoffees,
-  addCoffee,
-  deleteCoffee,
-  updateCoffee,
   toggleFavoriteCoffee,
+  getCoffeesRequest,
+  updateCoffeeRequest,
 } from "./coffeesAPI";
 
 const initialState = {
@@ -13,15 +11,15 @@ const initialState = {
   coffeesStatus: "idle",
 };
 
-// |================|
-// |  API Handlers  |
-// |================|
+// |====================|
+// |  Thunk Middleware  |
+// |====================|
 
 export const fetchCoffees = createAsyncThunk(
   "coffees/fetchCoffees",
   async () => {
     try {
-      const response = await getCoffees();
+      const response = await getCoffeesRequest();
       return response;
     } catch (err) {
       console.log(err);
@@ -30,37 +28,11 @@ export const fetchCoffees = createAsyncThunk(
   }
 );
 
-export const addNewCoffee = createAsyncThunk(
-  "coffees/addNewCoffee",
-  async (newCoffeeFormData) => {
-    try {
-      const response = await addCoffee(newCoffeeFormData);
-      return response;
-    } catch (err) {
-      console.log(err);
-      throw new Error(err);
-    }
-  }
-);
-
-export const updateCoffeeInfo = createAsyncThunk(
-  "coffees/updateCoffeeInfo",
+export const updateCoffeeThunk = createAsyncThunk(
+  "coffees/updateCoffeeThunk",
   async (updateCoffeeInfo) => {
     try {
-      const response = await updateCoffee(updateCoffeeInfo);
-      return response;
-    } catch (err) {
-      console.log(err);
-      throw new Error(err);
-    }
-  }
-);
-
-export const deleteCoffeeById = createAsyncThunk(
-  "coffees/deleteCoffeeById",
-  async (id) => {
-    try {
-      const response = await deleteCoffee(id);
+      const response = await updateCoffeeRequest(updateCoffeeInfo);
       return response;
     } catch (err) {
       console.log(err);
@@ -89,7 +61,20 @@ export const toggleFavorite = createAsyncThunk(
 export const coffeesSlice = createSlice({
   name: "Coffees",
   initialState,
-  reducers: {},
+  reducers: {
+    addCoffee: (state, { payload }) => {
+      state.coffees.push(payload);
+    },
+    deleteCoffee: (state, { payload }) => {
+      state.coffees = state.coffees.filter((coffee) => coffee.id !== payload);
+    },
+    updateCoffee: (state, { payload }) => {
+      const coffeeToUpdate = state.coffees.findIndex(
+        (coffee) => coffee.id === payload.id
+      );
+      state.coffees[coffeeToUpdate] = payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchCoffees.pending, (state) => {
@@ -97,31 +82,7 @@ export const coffeesSlice = createSlice({
       })
       .addCase(fetchCoffees.fulfilled, (state, { payload }) => {
         state.coffeesStatus = "success";
-        state.coffees = payload;
-      })
-      .addCase(addNewCoffee.pending, (state) => {
-        state.coffeesStatus = "loading";
-      })
-      .addCase(addNewCoffee.fulfilled, (state, { payload }) => {
-        state.coffeesStatus = "success";
-      })
-      .addCase(deleteCoffeeById.pending, (state) => {
-        state.coffeesStatus = "loading";
-      })
-      .addCase(deleteCoffeeById.fulfilled, (state) => {
-        state.coffeesStatus = "success";
-      })
-      .addCase(updateCoffeeInfo.pending, (state) => {
-        state.coffeesStatus = "loading";
-      })
-      .addCase(updateCoffeeInfo.fulfilled, (state) => {
-        state.coffeesStatus = "success";
-      })
-      .addCase(toggleFavorite.pending, (state) => {
-        state.coffeesStatus = "loading";
-      })
-      .addCase(toggleFavorite.fulfilled, (state) => {
-        state.coffeesStatus = "success";
+        state.coffees = payload.coffees;
       });
   },
 });
@@ -130,13 +91,14 @@ export const coffeesSlice = createSlice({
 // |  Actions  |
 // |===========|
 
-// export const { toggleFavorite } = coffeesSlice.actions;
+export const { addCoffee, deleteCoffee, updateCoffee } = coffeesSlice.actions;
 
 // |============|
 // |  Selector  |
 // |============|
 
-export const coffeesSelector = (state) => state.coffees;
+export const coffeesSelector = (state) => state.coffees.coffees;
+export const coffeesStatusSelector = (state) => state.coffees.coffeesStatus;
 
 // |==================|
 // |  Export Reducer  |
