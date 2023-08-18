@@ -14,6 +14,8 @@ const NewCoffeeForm = () => {
     origin: "",
     process: "",
     flavorNotes: "",
+    favorite: false,
+    createdAt: Date.now(),
   });
 
   const handleChange = (e) => {

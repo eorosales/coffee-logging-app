@@ -6,3 +6,10 @@ export const capitalize = (str) => {
   }
   return words.join(" ");
 };
+
+export const formatDate = (createdAt) => {
+  const date = new Date(createdAt);
+  const dateFormat =
+    date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear();
+  return dateFormat;
+};

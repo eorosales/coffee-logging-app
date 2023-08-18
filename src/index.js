@@ -8,15 +8,31 @@ import { store } from "./app/store";
 import "semantic-ui-css/semantic.min.css";
 import { fetchCoffees } from "./features/coffees/coffeesSlice";
 
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Coffee from "./features/coffees/Coffee";
+import { getCoffeeRequest } from "./features/coffees/coffeesAPI";
+
 const container = document.getElementById("root");
 const root = createRoot(container);
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+  },
+  {
+    path: "coffees/:coffeeId",
+    element: <Coffee />,
+    loader: async ({ params }) => getCoffeeRequest(params.coffeeId),
+  },
+]);
 
 store.dispatch(fetchCoffees());
 
 root.render(
   // <React.StrictMode>
   <Provider store={store}>
-    <App />
+    <RouterProvider router={router} />
   </Provider>
   // </React.StrictMode>
 );

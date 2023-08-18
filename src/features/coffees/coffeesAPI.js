@@ -3,8 +3,11 @@ import {
   collection,
   deleteDoc,
   doc,
+  query,
   getDocs,
   updateDoc,
+  where,
+  getDoc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { capitalize } from "../../utils/formatting";
@@ -23,6 +26,29 @@ export const getCoffeesRequest = async () => {
     console.log(err);
     throw new Error(err);
   }
+};
+
+export const getCoffeeRequest = async (coffeeId) => {
+  const docRef = doc(db, "coffees", coffeeId);
+  const docSnap = await getDoc(docRef);
+  const coffeeDetails = docSnap.data();
+  return coffeeDetails;
+};
+
+export const fetchDials = async ({ params }) => {
+  let dials = [];
+  const q = query(
+    collection(db, "dials"),
+    where("coffee", "==", params.coffeeId)
+  );
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach((dial) =>
+    dials.push({
+      ...dial.data(),
+      id: dial.id,
+    })
+  );
+  return dials;
 };
 
 export const addCoffeeRequest = async (newCoffeeFormData) => {
@@ -62,8 +88,7 @@ export const updateCoffeeRequest = async (updateCoffeeInfo) => {
 
 export const deleteCoffeeById = async (id) => {
   try {
-    const coffeeToDelete = await deleteDoc(doc(db, "coffees", id));
-    return coffeeToDelete;
+    await deleteDoc(doc(db, "coffees", id));
   } catch (err) {
     console.log(err);
     throw new Error(err);

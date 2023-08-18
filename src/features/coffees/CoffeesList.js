@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink } from "react-router-dom";
 import {
   coffeesSelector,
   coffeesStatusSelector,
@@ -6,6 +7,7 @@ import {
 } from "./coffeesSlice";
 import { deleteCoffeeById } from "./coffeesAPI";
 import UpdateCoffeeForm from "./UpdateCoffeeForm";
+import { Link } from "react-router-dom";
 
 const CoffeesList = () => {
   const dispatch = useDispatch();
@@ -13,8 +15,8 @@ const CoffeesList = () => {
   const coffeesStatus = useSelector(coffeesStatusSelector);
 
   const handleDelete = (id) => {
-    deleteCoffeeById(id);
     dispatch(deleteCoffee(id));
+    deleteCoffeeById(id);
   };
 
   return (
@@ -24,13 +26,22 @@ const CoffeesList = () => {
         coffees.map((coffee) => (
           <section key={coffee.id}>
             <ul>
-              <li>Name: {coffee.name}</li>
-              <li>Roaster: {coffee.roaster}</li>
-              <li>Origin: {coffee.origin}</li>
-              <li>Process: {coffee.process}</li>
-              <li>Flavors: {`${coffee.flavorNotes}`}</li>
+              <li>
+                {coffee.roaster} - {coffee.name}
+              </li>
+              <li>
+                {coffee.origin} - {coffee.process} Process
+              </li>
+              <li>Notes of {`${coffee.flavorNotes}`}</li>
             </ul>
             <button onClick={() => handleDelete(coffee.id)}>X</button>
+            <Link
+              component={RouterLink}
+              to={`coffees/${coffee.id}`}
+              style={{ textDecoration: "none" }}>
+              <strong>Details</strong>
+            </Link>
+            <button>Dials</button>
             <UpdateCoffeeForm coffee={coffee} />
           </section>
         ))}
