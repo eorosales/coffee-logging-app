@@ -10,7 +10,6 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
-import { nanoid } from "@reduxjs/toolkit";
 
 const refDials = collection(db, "dials");
 
@@ -29,7 +28,7 @@ export const fetchDialsRequest = async () => {
 };
 
 export const getDialRequest = async (dialId) => {
-  const docRef = doc(db, "coffees", dialId);
+  const docRef = doc(db, "dials", dialId);
   const docSnap = await getDoc(docRef);
   const dialDetails = docSnap.data();
   return dialDetails;
@@ -50,7 +49,7 @@ export const fetchDialsByIdRequest = async (coffeeId) => {
 
 export const addDialRequest = async (newDialFormData) => {
   try {
-    const response = await addDoc(refDials, {
+    const newDial = await addDoc(refDials, {
       coffee: newDialFormData.coffee,
       temp: newDialFormData.temp,
       weight: newDialFormData.weight,
@@ -60,7 +59,7 @@ export const addDialRequest = async (newDialFormData) => {
       favorite: false,
       createdAt: Date.now(),
     });
-    return response;
+    return newDial.id;
   } catch (err) {
     console.log(err);
     throw new Error(err);
@@ -87,7 +86,6 @@ export const updateDialRequest = async (updateDialInfo) => {
 
 export const deleteDialByIdRequest = async (id) => {
   try {
-    console.log(id);
     await deleteDoc(doc(db, "dials", id));
   } catch (err) {
     console.log(err);
@@ -95,17 +93,11 @@ export const deleteDialByIdRequest = async (id) => {
   }
 };
 
+export const deleteAllDialsByCoffeeIdRequest = async (coffeeId) => {
+  const q = query(collection(db, "dials"), where("coffee", "==", coffeeId));
+  const querySnapshot = await getDocs(q);
+  querySnapshot.forEach(async (dial) => {
+    await deleteDoc(doc(db, "dials", dial.id));
+  });
+};
 // TODO: toggleFavoriteDial
-
-// export const toggleFavoriteCoffee = async ({ id, fav }) => {
-//   const coffeeDocRef = doc(db, "coffees", id);
-//   try {
-//     const response = await updateDoc(coffeeDocRef, {
-//       favorite: !fav,
-//     });
-//     return response;
-//   } catch (err) {
-//     console.log(err);
-//     throw new Error(err);
-//   }
-// };

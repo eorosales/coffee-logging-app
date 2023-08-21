@@ -30,10 +30,9 @@ const NewDialForm = ({ coffee }) => {
   };
 
   const handleSubmit = async (e) => {
-    const newDial = { id: nanoid(), ...formData };
     e.preventDefault();
-    dispatch(addDial(newDial));
-    addDialRequest(newDial);
+    const newDial = await addDialRequest(formData);
+    dispatch(addDial({ id: newDial, ...formData }));
     setFormData({
       coffee,
       temp: "",

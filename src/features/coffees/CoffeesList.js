@@ -8,15 +8,19 @@ import {
 import { deleteCoffeeById } from "./coffeesApi";
 import UpdateCoffeeForm from "./UpdateCoffeeForm";
 import { Link } from "react-router-dom";
+import { deleteAllDialsByCoffeeIdRequest } from "../dials/dialsApi";
+import { deleteAllDialsByCoffeeId } from "../dials/dialsSlice";
 
 const CoffeesList = () => {
   const dispatch = useDispatch();
   const coffees = useSelector(coffeesSelector);
   const coffeesStatus = useSelector(coffeesStatusSelector);
 
-  const handleDelete = (id) => {
+  const handleDeleteCoffee = (id) => {
     dispatch(deleteCoffee(id));
+    dispatch(deleteAllDialsByCoffeeId(id));
     deleteCoffeeById(id);
+    deleteAllDialsByCoffeeIdRequest(id);
   };
 
   return (
@@ -34,7 +38,7 @@ const CoffeesList = () => {
               </li>
               <li>Notes of {`${coffee.flavorNotes}`}</li>
             </ul>
-            <button onClick={() => handleDelete(coffee.id)}>X</button>
+            <button onClick={() => handleDeleteCoffee(coffee.id)}>X</button>
             <Link
               component={RouterLink}
               to={`coffees/${coffee.id}`}

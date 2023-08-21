@@ -10,7 +10,7 @@ import { store } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getCoffeeRequest } from "./features/coffees/coffeesApi";
 import { fetchCoffees } from "./features/coffees/coffeesSlice";
-import { fetchDials, fetchDialsThunk } from "./features/dials/dialsSlice";
+import { fetchDialsThunk } from "./features/dials/dialsSlice";
 
 const container = document.getElementById("root");
 const root = createRoot(container);

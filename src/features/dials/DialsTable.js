@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteDial, dialsSelector, dialsStatusSelector } from "./dialsSlice";
+import { deleteDial, dialsSelector } from "./dialsSlice";
 import { deleteDialByIdRequest } from "./dialsApi";
 
 const DialsTable = ({ coffee }) => {

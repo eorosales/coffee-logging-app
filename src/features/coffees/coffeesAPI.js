@@ -32,7 +32,7 @@ export const getCoffeeRequest = async (coffeeId) => {
   const docRef = doc(db, "coffees", coffeeId);
   const docSnap = await getDoc(docRef);
   const coffeeDetails = docSnap.data();
-  return { ...coffeeDetails, id: coffeeId };
+  return { id: coffeeId, ...coffeeDetails };
 };
 
 export const fetchDials = async ({ params }) => {
@@ -53,7 +53,7 @@ export const fetchDials = async ({ params }) => {
 
 export const addCoffeeRequest = async (newCoffeeFormData) => {
   try {
-    await addDoc(refCoffees, {
+    const newCoffee = await addDoc(refCoffees, {
       roaster: capitalize(newCoffeeFormData.roaster),
       name: capitalize(newCoffeeFormData.name),
       origin: capitalize(newCoffeeFormData.origin),
@@ -62,6 +62,7 @@ export const addCoffeeRequest = async (newCoffeeFormData) => {
       favorite: false,
       createdAt: Date.now(),
     });
+    return newCoffee.id;
   } catch (err) {
     console.log(err);
     throw new Error(err);
