@@ -1,16 +1,16 @@
+import "./index.css";
+import "semantic-ui-css/semantic.min.css";
 import React from "react";
-import { createRoot } from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./index.css";
+import Coffee from "./features/coffees/Coffee";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { store } from "./app/store";
-import "semantic-ui-css/semantic.min.css";
-import { fetchCoffees } from "./features/coffees/coffeesSlice";
-
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Coffee from "./features/coffees/Coffee";
-import { getCoffeeRequest } from "./features/coffees/coffeesAPI";
+import { getCoffeeRequest } from "./features/coffees/coffeesApi";
+import { fetchCoffees } from "./features/coffees/coffeesSlice";
+import { fetchDials } from "./features/dials/dialsSlice";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
 ]);
 
 store.dispatch(fetchCoffees());
+store.dispatch(fetchDials());
 
 root.render(
   // <React.StrictMode>

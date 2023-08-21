@@ -1,12 +1,20 @@
 import React from "react";
 import { useLoaderData, Link } from "react-router-dom";
 import { formatDate } from "../../utils/formatting";
+import NewDialForm from "../dials/NewDialForm";
+import DialsTable from "../dials/DialsTable";
 
 const Coffee = () => {
-  const { name, roaster, origin, process, flavorNotes, createdAt, favorite } =
-    useLoaderData();
-
-  const formattedDate = formatDate(createdAt);
+  const {
+    id,
+    name,
+    roaster,
+    origin,
+    process,
+    flavorNotes,
+    createdAt,
+    favorite,
+  } = useLoaderData();
 
   return (
     <>
@@ -21,7 +29,9 @@ const Coffee = () => {
       </p>
       <p>{`${flavorNotes}`}</p>
       {favorite && <p>{`<3`}</p>}
-      <p>Created {formattedDate}</p>
+      <p>Created {formatDate(createdAt)}</p>
+      <DialsTable coffee={id} />
+      <NewDialForm coffee={id} />
     </>
   );
 };

@@ -3,12 +3,14 @@ import { useDispatch } from "react-redux";
 import { addCoffee } from "./coffeesSlice";
 import { Form, Grid } from "semantic-ui-react";
 import { nanoid } from "@reduxjs/toolkit";
-import { addCoffeeRequest } from "./coffeesAPI";
+import { addCoffeeRequest } from "./coffeesApi";
 import { capitalize } from "../../utils/formatting";
+import { fetchDialsByIdRequest } from "../dials/dialsApi";
 
 const NewCoffeeForm = () => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
+    id: nanoid(),
     roaster: "",
     name: "",
     origin: "",
@@ -24,14 +26,12 @@ const NewCoffeeForm = () => {
     const name = e.target.name;
     setFormData((prevState) => ({
       ...prevState,
-      id: nanoid(),
       [name]: capitalize(value),
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addCoffee(formData));
     addCoffeeRequest(formData);
     setFormData({
       roaster: "",

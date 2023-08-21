@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateCoffee } from "./coffeesSlice";
-import { updateCoffeeRequest } from "./coffeesAPI";
+import { updateCoffeeRequest } from "./coffeesApi";
 
 const UpdateCoffeeForm = ({ coffee }) => {
   const dispatch = useDispatch();

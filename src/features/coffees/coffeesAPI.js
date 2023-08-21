@@ -32,7 +32,7 @@ export const getCoffeeRequest = async (coffeeId) => {
   const docRef = doc(db, "coffees", coffeeId);
   const docSnap = await getDoc(docRef);
   const coffeeDetails = docSnap.data();
-  return coffeeDetails;
+  return { ...coffeeDetails, id: coffeeId };
 };
 
 export const fetchDials = async ({ params }) => {

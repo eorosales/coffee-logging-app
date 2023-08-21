@@ -5,7 +5,7 @@ import {
   coffeesStatusSelector,
   deleteCoffee,
 } from "./coffeesSlice";
-import { deleteCoffeeById } from "./coffeesAPI";
+import { deleteCoffeeById } from "./coffeesApi";
 import UpdateCoffeeForm from "./UpdateCoffeeForm";
 import { Link } from "react-router-dom";
 

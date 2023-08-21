@@ -3,7 +3,7 @@ import {
   toggleFavoriteCoffee,
   getCoffeesRequest,
   updateCoffeeRequest,
-} from "./coffeesAPI";
+} from "./coffeesApi";
 
 const initialState = {
   coffees: [],
