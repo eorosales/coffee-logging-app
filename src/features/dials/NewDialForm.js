@@ -3,6 +3,7 @@ import { Form, Grid } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { addDial } from "./dialsSlice";
 import { addDialRequest } from "./dialsApi";
+import { nanoid } from "@reduxjs/toolkit";
 
 const NewDialForm = ({ coffee }) => {
   const dispatch = useDispatch();
@@ -23,14 +24,16 @@ const NewDialForm = ({ coffee }) => {
     const name = e.target.name;
     setFormData((prevState) => ({
       ...prevState,
+      dialId: nanoid(),
       [name]: value,
     }));
   };
 
   const handleSubmit = async (e) => {
+    const newDial = { id: nanoid(), ...formData };
     e.preventDefault();
-    dispatch(addDial(formData));
-    addDialRequest(formData);
+    dispatch(addDial(newDial));
+    addDialRequest(newDial);
     setFormData({
       coffee,
       temp: "",

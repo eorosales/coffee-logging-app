@@ -32,7 +32,9 @@ const NewCoffeeForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addCoffeeRequest(formData);
+    const newCoffee = { id: nanoid(), ...formData };
+    dispatch(addCoffee(newCoffee));
+    addCoffeeRequest(newCoffee);
     setFormData({
       roaster: "",
       name: "",

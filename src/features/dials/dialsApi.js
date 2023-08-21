@@ -50,7 +50,7 @@ export const fetchDialsByIdRequest = async (coffeeId) => {
 
 export const addDialRequest = async (newDialFormData) => {
   try {
-    await addDoc(refDials, {
+    const response = await addDoc(refDials, {
       coffee: newDialFormData.coffee,
       temp: newDialFormData.temp,
       weight: newDialFormData.weight,
@@ -60,6 +60,7 @@ export const addDialRequest = async (newDialFormData) => {
       favorite: false,
       createdAt: Date.now(),
     });
+    return response;
   } catch (err) {
     console.log(err);
     throw new Error(err);

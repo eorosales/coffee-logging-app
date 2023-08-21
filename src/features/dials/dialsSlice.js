@@ -1,20 +1,36 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchDialsRequest } from "./dialsApi";
+import { addDialRequest, fetchDialsRequest } from "./dialsApi";
 
 const initialState = {
   dials: [],
   dialsStatus: "idle",
 };
 
-export const fetchDials = createAsyncThunk("dials/fetchDials", async () => {
-  try {
-    const response = await fetchDialsRequest();
-    return response.dials;
-  } catch (err) {
-    console.log(err);
-    throw new Error(err);
+export const fetchDialsThunk = createAsyncThunk(
+  "dials/fetchDials",
+  async () => {
+    try {
+      const response = await fetchDialsRequest();
+      return response.dials;
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
   }
-});
+);
+
+export const addDialThunk = createAsyncThunk(
+  "dials/addDials",
+  async (formData) => {
+    try {
+      const response = await addDialRequest(formData);
+      return response.data;
+    } catch (err) {
+      console.log(err);
+      throw new Error(err);
+    }
+  }
+);
 
 export const dialsSlice = createSlice({
   name: "dials",
@@ -29,12 +45,15 @@ export const dialsSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(fetchDials.pending, (state) => {
+      .addCase(fetchDialsThunk.pending, (state) => {
         state.dialsStatus = "loading";
       })
-      .addCase(fetchDials.fulfilled, (state, { payload }) => {
+      .addCase(fetchDialsThunk.fulfilled, (state, { payload }) => {
         state.dialsStatus = "success";
         state.dials = payload;
+      })
+      .addCase(addDialThunk.fulfilled, (state, { payload }) => {
+        state.dials.push(payload);
       });
   },
 });

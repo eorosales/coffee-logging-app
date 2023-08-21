@@ -10,7 +10,7 @@ import { store } from "./app/store";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getCoffeeRequest } from "./features/coffees/coffeesApi";
 import { fetchCoffees } from "./features/coffees/coffeesSlice";
-import { fetchDials } from "./features/dials/dialsSlice";
+import { fetchDials, fetchDialsThunk } from "./features/dials/dialsSlice";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -28,7 +28,7 @@ const router = createBrowserRouter([
 ]);
 
 store.dispatch(fetchCoffees());
-store.dispatch(fetchDials());
+store.dispatch(fetchDialsThunk());
 
 root.render(
   // <React.StrictMode>
