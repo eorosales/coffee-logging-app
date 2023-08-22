@@ -1,9 +1,7 @@
 import React, { useState } from "react";
-import { Form, Grid } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
 import { addDial } from "./dialsSlice";
 import { addDialRequest } from "./dialsApi";
-import { nanoid } from "@reduxjs/toolkit";
 
 const NewDialForm = ({ coffee }) => {
   const dispatch = useDispatch();
@@ -24,7 +22,6 @@ const NewDialForm = ({ coffee }) => {
     const name = e.target.name;
     setFormData((prevState) => ({
       ...prevState,
-      dialId: nanoid(),
       [name]: value,
     }));
   };
@@ -45,56 +42,50 @@ const NewDialForm = ({ coffee }) => {
 
   return (
     <>
-      <Grid textAlign='center' verticalAlign='middle'>
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Form widths='equal'>
-            <Form.Group inline>
-              <Form.Input
-                label='Temperature'
-                name='temp'
-                placeholder='Temperature'
-                value={formData.temp}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              <Form.Input
-                label='Weight'
-                name='weight'
-                placeholder='Weight'
-                value={formData.weight}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              <Form.Input
-                label='Grind'
-                name='grind'
-                placeholder='Grind Setting'
-                value={formData.grind}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              <Form.Input
-                label='Time'
-                name='time'
-                placeholder='Time'
-                value={formData.time}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-              <Form.Input
-                label='Yield'
-                name='yield'
-                placeholder='Yield'
-                value={formData.yield}
-                onChange={(e) => handleChange(e)}
-                required
-              />
-            </Form.Group>
+      <form widths='equal'>
+        <input
+          label='Temperature'
+          name='temp'
+          placeholder='Temperature'
+          value={formData.temp}
+          onChange={(e) => handleChange(e)}
+          required
+        />
+        <input
+          label='Weight'
+          name='weight'
+          placeholder='Weight'
+          value={formData.weight}
+          onChange={(e) => handleChange(e)}
+          required
+        />
+        <input
+          label='Grind'
+          name='grind'
+          placeholder='Grind Setting'
+          value={formData.grind}
+          onChange={(e) => handleChange(e)}
+          required
+        />
+        <input
+          label='Time'
+          name='time'
+          placeholder='Time'
+          value={formData.time}
+          onChange={(e) => handleChange(e)}
+          required
+        />
+        <input
+          label='Yield'
+          name='yield'
+          placeholder='Yield'
+          value={formData.yield}
+          onChange={(e) => handleChange(e)}
+          required
+        />
 
-            <button onClick={(e) => handleSubmit(e)}>Submit</button>
-          </Form>
-        </Grid.Column>
-      </Grid>
+        <button onClick={(e) => handleSubmit(e)}>Submit</button>
+      </form>
     </>
   );
 };

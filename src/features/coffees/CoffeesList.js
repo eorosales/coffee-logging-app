@@ -26,27 +26,29 @@ const CoffeesList = () => {
   return (
     <>
       <h2>Coffees List</h2>
+
       {coffeesStatus === "success" &&
         coffees.map((coffee) => (
           <section key={coffee.id}>
-            <ul>
-              <li>
-                {coffee.roaster} - {coffee.name}
-              </li>
-              <li>
-                {coffee.origin} - {coffee.process} Process
-              </li>
-              <li>Notes of {`${coffee.flavorNotes}`}</li>
-            </ul>
-            <button onClick={() => handleDeleteCoffee(coffee.id)}>X</button>
-            <Link
-              component={RouterLink}
-              to={`coffees/${coffee.id}`}
-              style={{ textDecoration: "none" }}>
-              <strong>Details</strong>
-            </Link>
-            <button>Dials</button>
-            <UpdateCoffeeForm coffee={coffee} />
+            <div>
+              <h3>{coffee.name}</h3>
+              <p>{coffee.roaster} </p>
+              <p>
+                {coffee.origin} - {coffee.process} Process Notes of{" "}
+                {`${coffee.flavorNotes}`}
+              </p>
+
+              <UpdateCoffeeForm coffee={coffee} />
+            </div>
+
+            <div>
+              <button onClick={() => handleDeleteCoffee(coffee.id)}>X</button>
+              <button>
+                <Link component={RouterLink} to={`coffees/${coffee.id}`}>
+                  Details
+                </Link>
+              </button>
+            </div>
           </section>
         ))}
     </>

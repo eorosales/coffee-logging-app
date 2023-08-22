@@ -100,4 +100,3 @@ export const deleteAllDialsByCoffeeIdRequest = async (coffeeId) => {
     await deleteDoc(doc(db, "dials", dial.id));
   });
 };
-// TODO: toggleFavoriteDial

@@ -17,7 +17,7 @@ const Coffee = () => {
   } = useLoaderData();
 
   return (
-    <>
+    <div style={{ padding: "2em" }}>
       <Link to={`/`} sx={{ textDecoration: "none", mt: "2ch" }}>
         <strong>Back to Home</strong>
       </Link>
@@ -32,7 +32,7 @@ const Coffee = () => {
       <p>Created {formatDate(createdAt)}</p>
       <DialsTable coffee={id} />
       <NewDialForm coffee={id} />
-    </>
+    </div>
   );
 };
 
