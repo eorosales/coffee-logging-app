@@ -3,8 +3,16 @@ import { useDispatch } from "react-redux";
 import { addCoffee } from "./coffeesSlice";
 import { addCoffeeRequest } from "./coffeesApi";
 import { capitalize } from "../../utils/formatting";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  TextField,
+} from "@mui/material";
 
-const NewCoffeeForm = () => {
+const NewCoffeeForm = ({ close }) => {
   const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     roaster: "",
@@ -28,6 +36,7 @@ const NewCoffeeForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    close();
     const newCoffee = await addCoffeeRequest(formData);
     dispatch(addCoffee({ id: newCoffee, ...formData }));
     setFormData({
@@ -40,54 +49,83 @@ const NewCoffeeForm = () => {
   };
 
   return (
-    <>
-      <form>
-        <input
-          label='Roaster'
-          name='roaster'
-          placeholder='Coffee Roaster'
-          value={formData.roaster}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <input
-          label='Name'
-          name='name'
-          placeholder='Coffee Name'
-          value={formData.name}
-          onChange={(e) => handleChange(e)}
-          required
-        />
+    <DialogContent
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        columnGap: 1,
+      }}>
+      <DialogTitle sx={{ width: "90%", textAlign: "center" }}>
+        Add New Coffee
+      </DialogTitle>
+      <DialogContentText>
+        Please fill in all fields to add a new coffee to your collection.
+      </DialogContentText>
+      <TextField
+        sx={{ width: "49%" }}
+        variant='standard'
+        autoFocus
+        margin='dense'
+        label='Roaster'
+        name='roaster'
+        value={formData.roaster}
+        onChange={(e) => handleChange(e)}
+        size='small'
+        required
+      />
+      <TextField
+        sx={{ width: "49%" }}
+        variant='standard'
+        margin='dense'
+        label='Name'
+        name='name'
+        value={formData.name}
+        onChange={(e) => handleChange(e)}
+        size='small'
+        required
+      />
 
-        <input
-          label='Origin'
-          name='origin'
-          placeholder='Coffee Origin'
-          value={formData.origin}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <input
-          label='Process'
-          name='process'
-          placeholder='Coffee Process'
-          value={formData.process}
-          onChange={(e) => handleChange(e)}
-          required
-        />
+      <TextField
+        sx={{ width: "49%" }}
+        variant='standard'
+        margin='dense'
+        label='Origin'
+        name='origin'
+        value={formData.origin}
+        onChange={(e) => handleChange(e)}
+        size='small'
+        required
+      />
+      <TextField
+        sx={{ width: "49%" }}
+        variant='standard'
+        margin='dense'
+        label='Process'
+        name='process'
+        value={formData.process}
+        onChange={(e) => handleChange(e)}
+        size='small'
+        required
+      />
 
-        <input
-          label='Flavor Notes'
-          name='flavorNotes'
-          placeholder='Coffee Flavor Notes'
-          value={formData.flavorNotes}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-
-        <button onClick={(e) => handleSubmit(e)}>Submit</button>
-      </form>
-    </>
+      <TextField
+        margin='dense'
+        variant='standard'
+        label='Flavor Notes'
+        name='flavorNotes'
+        placeholder='Flavor 1, Flavor 2, Flavor 3...'
+        value={formData.flavorNotes}
+        onChange={(e) => handleChange(e)}
+        size='small'
+        fullWidth
+        required
+      />
+      <DialogActions>
+        <Button onClick={close}>Cancel</Button>
+        <Button onClick={(e) => handleSubmit(e)}>Add</Button>
+      </DialogActions>
+    </DialogContent>
   );
 };
 

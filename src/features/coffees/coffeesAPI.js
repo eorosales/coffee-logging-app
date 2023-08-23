@@ -96,13 +96,12 @@ export const deleteCoffeeById = async (id) => {
   }
 };
 
-export const toggleFavoriteCoffee = async ({ id, fav }) => {
-  const coffeeDocRef = doc(db, "coffees", id);
+export const toggleFavoriteCoffeeRequest = async (coffeeId, favorite) => {
   try {
-    const response = await updateDoc(coffeeDocRef, {
-      favorite: !fav,
+    await updateDoc(doc(db, "coffees", coffeeId), {
+      favorite: !favorite,
     });
-    return response;
+    return coffeeId;
   } catch (err) {
     console.log(err);
     throw new Error(err);

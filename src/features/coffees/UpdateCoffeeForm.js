@@ -2,8 +2,15 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { updateCoffee } from "./coffeesSlice";
 import { updateCoffeeRequest } from "./coffeesApi";
+import { Box, Button, Container, TextField } from "@mui/material";
+import { deleteCoffeeById } from "./coffeesApi";
+import { deleteCoffee } from "./coffeesSlice";
+import { deleteAllDialsByCoffeeIdRequest } from "../dials/dialsApi";
+import { deleteAllDialsByCoffeeId } from "../dials/dialsSlice";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 
-const UpdateCoffeeForm = ({ coffee }) => {
+const UpdateCoffeeForm = ({ coffee, handleExpandClick }) => {
   const dispatch = useDispatch();
   const [updateInfo, setUpdateInfo] = useState({
     id: coffee.id,
@@ -29,54 +36,82 @@ const UpdateCoffeeForm = ({ coffee }) => {
     e.preventDefault();
     dispatch(updateCoffee(updateInfo));
     updateCoffeeRequest(updateInfo);
+    handleExpandClick();
+  };
+
+  const handleDeleteCoffee = (id) => {
+    dispatch(deleteCoffee(id));
+    dispatch(deleteAllDialsByCoffeeId(id));
+    deleteCoffeeById(id);
+    deleteAllDialsByCoffeeIdRequest(id);
   };
 
   return (
-    <>
-      <form>
-        <input
-          label='Roaster'
-          name='roaster'
-          placeholder='Coffee Roaster'
-          value={updateInfo.roaster}
-          onChange={(e) => handleChange(e)}
-          required
-        />
-        <input
-          label='Name'
+    <Container>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }}>
+        <TextField
+          id='outlined-helperText'
           name='name'
-          placeholder='Coffee Name'
+          label='Name'
           value={updateInfo.name}
           onChange={(e) => handleChange(e)}
+          size='small'
+          sx={{ width: 1 }}
           required
         />
-        <input
-          label='Origin'
+        <TextField
+          id='outlined-helperText'
+          name='roaster'
+          label='Roaster'
+          value={updateInfo.roaster}
+          onChange={(e) => handleChange(e)}
+          size='small'
+          sx={{ mt: 2, width: 1 }}
+          required
+        />
+        <TextField
+          id='outlined-helperText'
           name='origin'
-          placeholder='Coffee Origin'
+          label='Origin'
           value={updateInfo.origin}
           onChange={(e) => handleChange(e)}
+          size='small'
+          sx={{ mt: 2, width: 1 }}
           required
         />
-        <input
-          label='Process'
+        <TextField
+          id='outlined-helperText'
           name='process'
-          placeholder='Coffee Process'
+          label='Process'
           value={updateInfo.process}
           onChange={(e) => handleChange(e)}
+          size='small'
+          sx={{ mt: 2, width: 1 }}
           required
         />
-        <input
-          label='Flavor Notes'
+        <TextField
+          id='outlined-helperText'
           name='flavorNotes'
-          placeholder='Coffee Flavor Notes'
+          label='Flavor Notes'
           value={updateInfo.flavorNotes}
           onChange={(e) => handleChange(e)}
+          size='small'
+          sx={{ mt: 2, width: 1 }}
           required
         />
-        <button onClick={(e) => handleSubmit(e)}>Submit</button>
-      </form>
-    </>
+      </Box>
+      <Box sx={{ display: "flex", justifyContent: "space-evenly", mt: 2 }}>
+        <Button
+          startIcon={<DeleteIcon />}
+          onClick={() => handleDeleteCoffee(coffee.id)}
+          sx={{ color: "salmon" }}>
+          Delete
+        </Button>
+        <Button startIcon={<EditIcon />} onClick={(e) => handleSubmit(e)}>
+          Update
+        </Button>
+      </Box>
+    </Container>
   );
 };
 

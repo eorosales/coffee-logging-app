@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  toggleFavoriteCoffee,
-  getCoffeesRequest,
-  updateCoffeeRequest,
-} from "./coffeesApi";
+import { getCoffeesRequest, updateCoffeeRequest } from "./coffeesApi";
 
 const initialState = {
   coffees: [],
@@ -41,25 +37,12 @@ export const updateCoffeeThunk = createAsyncThunk(
   }
 );
 
-export const toggleFavorite = createAsyncThunk(
-  "coffees/toggleFavorite",
-  async (toggleFav) => {
-    try {
-      const response = await toggleFavoriteCoffee(toggleFav);
-      return response;
-    } catch (err) {
-      console.log(err);
-      throw new Error(err);
-    }
-  }
-);
-
 // |=================|
 // |  Coffees Slice  |
 // |=================|
 
 export const coffeesSlice = createSlice({
-  name: "Coffees",
+  name: "coffees",
   initialState,
   reducers: {
     addCoffee: (state, { payload }) => {
@@ -73,6 +56,15 @@ export const coffeesSlice = createSlice({
         (coffee) => coffee.id === payload.id
       );
       state.coffees[coffeeToUpdate] = payload;
+    },
+    toggleFavorite: (state, { payload }) => {
+      const coffeeToFav = state.coffees.findIndex(
+        (coffee) => coffee.id === payload
+      );
+      state.coffees[coffeeToFav] = {
+        ...state.coffees[coffeeToFav],
+        favorite: !state.coffees[coffeeToFav].favorite,
+      };
     },
   },
   extraReducers(builder) {
@@ -91,7 +83,8 @@ export const coffeesSlice = createSlice({
 // |  Actions  |
 // |===========|
 
-export const { addCoffee, deleteCoffee, updateCoffee } = coffeesSlice.actions;
+export const { addCoffee, deleteCoffee, updateCoffee, toggleFavorite } =
+  coffeesSlice.actions;
 
 // |============|
 // |  Selector  |
