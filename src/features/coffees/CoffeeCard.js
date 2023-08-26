@@ -59,24 +59,31 @@ const CoffeeCard = ({ coffee }) => {
     return dials
       .filter((dial) => dial.coffee === coffee.id && dial.favorite === true)
       .map((dial) => (
-        <Box key={dial.id} sx={{ width: 1, display: "flex", margin: "auto" }}>
+        <Box
+          key={dial.id}
+          sx={{
+            width: 1,
+            display: "flex",
+            margin: "auto",
+            marginBlockStart: 2,
+          }}>
           <Table size='small'>
             <TableHead>
               <TableRow>
-                <TableCell>Temp</TableCell>
-                <TableCell>Grind</TableCell>
-                <TableCell>Weight</TableCell>
-                <TableCell>Time</TableCell>
-                <TableCell>Yield</TableCell>
+                <TableCell sx={{ padding: "0" }}>Temp</TableCell>
+                <TableCell sx={{ padding: "0" }}>Grind</TableCell>
+                <TableCell sx={{ padding: "0" }}>Weight</TableCell>
+                <TableCell sx={{ padding: "0" }}>Time</TableCell>
+                <TableCell sx={{ padding: "0" }}>Yield</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               <TableRow>
-                <TableCell>{dial.temp}</TableCell>
-                <TableCell>{dial.grind}</TableCell>
-                <TableCell>{dial.weight}</TableCell>
-                <TableCell>{dial.time}</TableCell>
-                <TableCell>{dial.yield}</TableCell>
+                <TableCell sx={{ padding: "0" }}>{dial.temp}</TableCell>
+                <TableCell sx={{ padding: "0" }}>{dial.grind}</TableCell>
+                <TableCell sx={{ padding: "0" }}>{dial.weight}</TableCell>
+                <TableCell sx={{ padding: "0" }}>{dial.time}</TableCell>
+                <TableCell sx={{ padding: "0" }}>{dial.yield}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -88,17 +95,24 @@ const CoffeeCard = ({ coffee }) => {
     <Card sx={{ maxWidth: 340 }}>
       <CardActionArea component={RouterLink} to={`coffees/${coffee.id}`}>
         <CardContent>
-          <Typography gutterBottom variant='h5' component='div'>
-            {coffee.name}
-          </Typography>
-          <Typography variant='body2' color='text.secondary'>
+          <Typography variant='h3'>{coffee.name}</Typography>
+          <Typography variant='subtitle1' component='div'>
             {coffee.roaster}
-            <br />
-            Origin: {coffee.origin}
-            <br />
-            Process: {coffee.process}
-            <br />
-            Flavor: {`${coffee.flavorNotes}`}
+          </Typography>
+
+          <Typography variant='body2' color='text.secondary'>
+            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
+              <MapIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />{" "}
+              {coffee.origin}
+            </Box> */}
+            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
+              <LoopIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />
+              Process: {coffee.process}
+            </Box> */}
+            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
+              <ShortTextIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />
+              Flavor: {`${coffee.flavorNotes}`}
+            </Box> */}
           </Typography>
           {baseDial()}
         </CardContent>

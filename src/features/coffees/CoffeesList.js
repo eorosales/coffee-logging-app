@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { coffeesSelector, coffeesStatusSelector } from "./coffeesSlice";
-import { Box, Button, Dialog, Grid } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Dialog,
+  Grid,
+  Typography,
+} from "@mui/material";
 import CoffeeCard from "./CoffeeCard";
 import AddIcon from "@mui/icons-material/Add";
 import NewCoffeeForm from "./NewCoffeeForm";
@@ -21,26 +28,30 @@ const CoffeesList = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <Box sx={{ display: "flex", alignItems: "center" }}>
-        <h2>Coffees List</h2>{" "}
-        <Button sx={{ marginLeft: "auto" }} onClick={handleClickOpen}>
-          <AddIcon />
-        </Button>
+    <Container>
+      <Box sx={{ flexGrow: 1 }}>
+        {/* Title and New Coffee Form Button "+" */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Typography variant='h3'>Coffees List</Typography>
+          <Button sx={{ marginLeft: "auto" }} onClick={handleClickOpen}>
+            <AddIcon />
+          </Button>
+        </Box>{" "}
+        {/* All Coffees */}
+        <Grid container spacing={2}>
+          {coffeesStatus === "success" &&
+            coffees.map((coffee) => (
+              <Grid item xs={12} sm={4} key={coffee.id}>
+                <CoffeeCard coffee={coffee} />
+              </Grid>
+            ))}
+        </Grid>
+        {/* Open Dialog for New Coffee Form */}
+        <Dialog open={open} onClose={handleClose}>
+          <NewCoffeeForm close={handleClose} />
+        </Dialog>
       </Box>
-
-      <Grid container spacing={2}>
-        {coffeesStatus === "success" &&
-          coffees.map((coffee) => (
-            <Grid item xs={12} sm={4} key={coffee.id}>
-              <CoffeeCard coffee={coffee} />
-            </Grid>
-          ))}
-      </Grid>
-      <Dialog open={open} onClose={handleClose}>
-        <NewCoffeeForm close={handleClose} />
-      </Dialog>
-    </Box>
+    </Container>
   );
 };
 

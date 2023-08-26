@@ -57,6 +57,7 @@ const DialsTable = ({ coffee }) => {
       selectedDial.favorite
     );
     dispatch(baseDial(toggleBaseDial));
+    setSelected([]);
   };
 
   return (

@@ -6,16 +6,8 @@ import DialsTable from "../dials/DialsTable";
 import { Container } from "@mui/material";
 
 const Coffee = () => {
-  const {
-    id,
-    name,
-    roaster,
-    origin,
-    process,
-    flavorNotes,
-    createdAt,
-    favorite,
-  } = useLoaderData();
+  const { id, name, roaster, origin, process, flavorNotes, createdAt } =
+    useLoaderData();
 
   return (
     <Container style={{ padding: "2em" }}>
@@ -29,7 +21,6 @@ const Coffee = () => {
         {origin} | {process} Process
       </p>
       <p>{`${flavorNotes}`}</p>
-      {favorite && <p>{`<3`}</p>}
       <p>Created {formatDate(createdAt)}</p>
       <DialsTable coffee={id} />
       <NewDialForm coffee={id} />

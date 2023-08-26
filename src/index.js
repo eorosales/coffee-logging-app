@@ -14,6 +14,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { getCoffeeRequest } from "./features/coffees/coffeesApi";
 import { fetchCoffees } from "./features/coffees/coffeesSlice";
 import { fetchDialsThunk } from "./features/dials/dialsSlice";
+import { ThemeProvider } from "@emotion/react";
+import { themeOptions } from "./utils/theme";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
@@ -35,9 +37,13 @@ store.dispatch(fetchDialsThunk());
 
 root.render(
   // <React.StrictMode>
+
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={themeOptions}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </Provider>
+
   // </React.StrictMode>
 );
 
