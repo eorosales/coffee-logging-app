@@ -9,7 +9,8 @@ export const capitalize = (str) => {
 
 export const formatDate = (createdAt) => {
   const date = new Date(createdAt);
+  const actualMonth = date.getMonth() + 1;
   const dateFormat =
-    date.getMonth() + "/" + date.getDay() + "/" + date.getFullYear();
+    actualMonth + "/" + date.getDate() + "/" + date.getFullYear();
   return dateFormat;
 };

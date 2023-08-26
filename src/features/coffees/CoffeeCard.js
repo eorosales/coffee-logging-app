@@ -1,11 +1,17 @@
 import { Link as RouterLink } from "react-router-dom";
 import {
+  Box,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   Collapse,
   IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
   Typography,
   styled,
 } from "@mui/material";
@@ -15,12 +21,14 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import React, { useState } from "react";
 import UpdateCoffeeForm from "./UpdateCoffeeForm";
 import { toggleFavorite } from "./coffeesSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleFavoriteCoffeeRequest } from "./coffeesApi";
+import { dialsSelector } from "../dials/dialsSlice";
 
 const CoffeeCard = ({ coffee }) => {
   const [expanded, setExpanded] = useState(false);
   const [favorite, setFavorite] = useState(coffee.favorite);
+  const dials = useSelector(dialsSelector);
   const dispatch = useDispatch();
 
   const ExpandMore = styled((props) => {
@@ -47,15 +55,44 @@ const CoffeeCard = ({ coffee }) => {
     dispatch(toggleFavorite(favoriteCoffee));
   };
 
+  const baseDial = () => {
+    return dials
+      .filter((dial) => dial.coffee === coffee.id && dial.favorite === true)
+      .map((dial) => (
+        <Box key={dial.id} sx={{ width: 1, display: "flex", margin: "auto" }}>
+          <Table size='small'>
+            <TableHead>
+              <TableRow>
+                <TableCell>Temp</TableCell>
+                <TableCell>Grind</TableCell>
+                <TableCell>Weight</TableCell>
+                <TableCell>Time</TableCell>
+                <TableCell>Yield</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              <TableRow>
+                <TableCell>{dial.temp}</TableCell>
+                <TableCell>{dial.grind}</TableCell>
+                <TableCell>{dial.weight}</TableCell>
+                <TableCell>{dial.time}</TableCell>
+                <TableCell>{dial.yield}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </Box>
+      ));
+  };
+
   return (
     <Card sx={{ maxWidth: 340 }}>
       <CardActionArea component={RouterLink} to={`coffees/${coffee.id}`}>
         <CardContent>
           <Typography gutterBottom variant='h5' component='div'>
-            Name: {coffee.name}
+            {coffee.name}
           </Typography>
           <Typography variant='body2' color='text.secondary'>
-            Roaster: {coffee.roaster}
+            {coffee.roaster}
             <br />
             Origin: {coffee.origin}
             <br />
@@ -63,6 +100,7 @@ const CoffeeCard = ({ coffee }) => {
             <br />
             Flavor: {`${coffee.flavorNotes}`}
           </Typography>
+          {baseDial()}
         </CardContent>
       </CardActionArea>
 

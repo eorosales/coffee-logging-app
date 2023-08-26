@@ -23,13 +23,14 @@ const NewDialForm = ({ coffee }) => {
     setFormData((prevState) => ({
       ...prevState,
       [name]: value,
+      createdAt: Date.now(),
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newDial = await addDialRequest(formData);
-    dispatch(addDial({ id: newDial, ...formData }));
+    dispatch(addDial({ ...formData, id: newDial, createdAt: Date.now() }));
     setFormData({
       coffee,
       temp: "",

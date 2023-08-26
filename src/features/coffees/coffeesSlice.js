@@ -3,7 +3,6 @@ import { getCoffeesRequest, updateCoffeeRequest } from "./coffeesApi";
 
 const initialState = {
   coffees: [],
-  coffeesFavorites: [],
   coffeesStatus: "idle",
 };
 

@@ -45,6 +45,15 @@ export const dialsSlice = createSlice({
     deleteAllDialsByCoffeeId: (state, { payload }) => {
       state.dials = state.dials.filter((dial) => dial.coffee !== payload);
     },
+    baseDial: (state, { payload }) => {
+      const baseDialIndex = state.dials.findIndex(
+        (dial) => dial.id === payload
+      );
+      state.dials[baseDialIndex] = {
+        ...state.dials[baseDialIndex],
+        favorite: !state.dials[baseDialIndex].favorite,
+      };
+    },
   },
   extraReducers(builder) {
     builder
@@ -65,7 +74,7 @@ export const dialsSlice = createSlice({
 // |  Actions  |
 // |===========|
 
-export const { addDial, deleteDial, deleteAllDialsByCoffeeId } =
+export const { addDial, deleteDial, deleteAllDialsByCoffeeId, baseDial } =
   dialsSlice.actions;
 
 // |============|

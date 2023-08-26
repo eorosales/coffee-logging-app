@@ -100,3 +100,15 @@ export const deleteAllDialsByCoffeeIdRequest = async (coffeeId) => {
     await deleteDoc(doc(db, "dials", dial.id));
   });
 };
+
+export const toggleFavoriteDialRequest = async (dialId, favorite) => {
+  try {
+    await updateDoc(doc(db, "dials", dialId), {
+      favorite: !favorite,
+    });
+    return dialId;
+  } catch (err) {
+    console.log(err);
+    throw new Error(err);
+  }
+};

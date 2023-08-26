@@ -28,6 +28,7 @@ const CoffeesList = () => {
           <AddIcon />
         </Button>
       </Box>
+
       <Grid container spacing={2}>
         {coffeesStatus === "success" &&
           coffees.map((coffee) => (

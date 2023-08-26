@@ -3,6 +3,7 @@ import { useLoaderData, Link } from "react-router-dom";
 import { formatDate } from "../../utils/formatting";
 import NewDialForm from "../dials/NewDialForm";
 import DialsTable from "../dials/DialsTable";
+import { Container } from "@mui/material";
 
 const Coffee = () => {
   const {
@@ -17,7 +18,7 @@ const Coffee = () => {
   } = useLoaderData();
 
   return (
-    <div style={{ padding: "2em" }}>
+    <Container style={{ padding: "2em" }}>
       <Link to={`/`} sx={{ textDecoration: "none", mt: "2ch" }}>
         <strong>Back to Home</strong>
       </Link>
@@ -32,7 +33,7 @@ const Coffee = () => {
       <p>Created {formatDate(createdAt)}</p>
       <DialsTable coffee={id} />
       <NewDialForm coffee={id} />
-    </div>
+    </Container>
   );
 };
 
