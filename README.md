@@ -10,7 +10,7 @@ I have worked in the coffee industry for nearly 17 years. During my time, dials 
 
 In many modern cafes, a tablet is used to track order tickets, so why not compliment that with a dials logger!
 
-## Planmned Features
+## Planned Features
 
 - User Profiles
 - User Roles
