@@ -71,7 +71,6 @@ const CoffeeCard = ({ coffee }) => {
             <TableHead>
               <TableRow>
                 <TableCell sx={{ padding: "0" }}>Temp</TableCell>
-                <TableCell sx={{ padding: "0" }}>Grind</TableCell>
                 <TableCell sx={{ padding: "0" }}>Weight</TableCell>
                 <TableCell sx={{ padding: "0" }}>Time</TableCell>
                 <TableCell sx={{ padding: "0" }}>Yield</TableCell>
@@ -80,7 +79,6 @@ const CoffeeCard = ({ coffee }) => {
             <TableBody>
               <TableRow>
                 <TableCell sx={{ padding: "0" }}>{dial.temp}</TableCell>
-                <TableCell sx={{ padding: "0" }}>{dial.grind}</TableCell>
                 <TableCell sx={{ padding: "0" }}>{dial.weight}</TableCell>
                 <TableCell sx={{ padding: "0" }}>{dial.time}</TableCell>
                 <TableCell sx={{ padding: "0" }}>{dial.yield}</TableCell>
@@ -95,24 +93,12 @@ const CoffeeCard = ({ coffee }) => {
     <Card sx={{ maxWidth: 340 }}>
       <CardActionArea component={RouterLink} to={`coffees/${coffee.id}`}>
         <CardContent>
-          <Typography variant='h3'>{coffee.name}</Typography>
-          <Typography variant='subtitle1' component='div'>
+          <Typography variant='secondary' component='div'>
             {coffee.roaster}
           </Typography>
-
-          <Typography variant='body2' color='text.secondary'>
-            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
-              <MapIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />{" "}
-              {coffee.origin}
-            </Box> */}
-            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
-              <LoopIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />
-              Process: {coffee.process}
-            </Box> */}
-            {/* <Box sx={{ display: "flex", alignItems: "center" }}>
-              <ShortTextIcon sx={{ fontSize: "1em", marginRight: ".4em" }} />
-              Flavor: {`${coffee.flavorNotes}`}
-            </Box> */}
+          <Typography variant='h3'>{coffee.name}</Typography>
+          <Typography variant='secondary' component='div'>
+            {coffee.origin}
           </Typography>
           {baseDial()}
         </CardContent>

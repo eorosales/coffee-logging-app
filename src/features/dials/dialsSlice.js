@@ -45,7 +45,7 @@ export const dialsSlice = createSlice({
     deleteAllDialsByCoffeeId: (state, { payload }) => {
       state.dials = state.dials.filter((dial) => dial.coffee !== payload);
     },
-    baseDial: (state, { payload }) => {
+    favoriteDial: (state, { payload }) => {
       const baseDialIndex = state.dials.findIndex(
         (dial) => dial.id === payload
       );
@@ -74,7 +74,7 @@ export const dialsSlice = createSlice({
 // |  Actions  |
 // |===========|
 
-export const { addDial, deleteDial, deleteAllDialsByCoffeeId, baseDial } =
+export const { addDial, deleteDial, deleteAllDialsByCoffeeId, favoriteDial } =
   dialsSlice.actions;
 
 // |============|

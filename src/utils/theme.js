@@ -4,18 +4,19 @@ export const themeOptions = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#3f51b5",
+      main: "#270904",
+      contrastText: "#f2f2f2",
     },
     secondary: {
-      main: "#f50057",
+      main: "#460a05",
     },
     background: {
-      paper: "#263238",
-      default: "#171c20",
+      default: "#1A2026",
+      paper: "#8C6954",
     },
     text: {
-      primary: "#b0bec5",
-      secondary: "#cfd8dc",
+      primary: "#f2f2f2",
+      secondary: "rgba(242,242,242,0.7)",
     },
   },
   typography: {

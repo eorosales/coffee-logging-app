@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteDial, dialsSelector, baseDial } from "./dialsSlice";
+import { deleteDial, dialsSelector, favoriteDial } from "./dialsSlice";
 import { deleteDialByIdRequest, toggleFavoriteDialRequest } from "./dialsApi";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
@@ -49,15 +49,16 @@ const DialsTable = ({ coffee }) => {
     });
   };
 
-  const handleBaseDial = async (selectedDialId) => {
-    const selectedDial = dials.find((dial) => dial.id === selectedDialId);
+  const handleFavoriteDial = async (selectedDialId) => {
+    // If any other dial is favorite, make favorite = false
+    // Make selected diial as favorite
 
-    const toggleBaseDial = await toggleFavoriteDialRequest(
+    const selectedDial = dials.find((dial) => dial.id === selectedDialId);
+    const toggleFavoriteDial = await toggleFavoriteDialRequest(
       selectedDial.id,
       selectedDial.favorite
     );
-    dispatch(baseDial(toggleBaseDial));
-    setSelected([]);
+    dispatch(favoriteDial(toggleFavoriteDial));
   };
 
   return (
@@ -85,7 +86,7 @@ const DialsTable = ({ coffee }) => {
       </Button>
       <Button
         disabled={selected.length > 1 || selected.length === 0}
-        onClick={() => handleBaseDial(selected[0])}>
+        onClick={() => handleFavoriteDial(selected[0])}>
         {selected.length !== 0 &&
         dials.find((dial) => dial.id === selected[0] && dial.favorite !== true)
           ? "Favorite"
